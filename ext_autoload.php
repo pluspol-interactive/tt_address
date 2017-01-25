@@ -1,5 +1,5 @@
 <?php
-$extensionPath = t3lib_extMgm::extPath('tt_address');
+$extensionPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('tt_address');
 return array(
 	'tx_ttaddress_compat' => $extensionPath . 'class.tx_ttaddress_compat.php',
 	'tx_ttaddress_tcefunc_selecttreeview' => $extensionPath . 'class.tx_ttaddress_tcefunc_selecttreeview.php',

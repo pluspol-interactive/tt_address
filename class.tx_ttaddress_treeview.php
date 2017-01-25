@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c)  2006 Ingo Renner <typo3@ingo-renner.com>
-* 
+*
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -30,7 +30,7 @@ class tx_ttaddress_treeview {
 
 	/**
 	 * Generation of TCEform elements of the type "select"
-	 * This will render a selector box element, or possibly a special 
+	 * This will render a selector box element, or possibly a special
 	 * construction with two selector boxes. That depends on configuration.
 	 *
 	 * @param	array		$PA: the parameter array for the current field
@@ -56,7 +56,7 @@ class tx_ttaddress_treeview {
 		#if ($config['itemsProcFunc']) $selItems = $this->pObj->procItems($selItems,$PA['fieldTSConfig']['itemsProcFunc.'],$config,$table,$row,$field);
 
 			// Possibly remove some items:
-		$removeItems=t3lib_div::trimExplode(',',$PA['fieldTSConfig']['removeItems'],1);
+		$removeItems=\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$PA['fieldTSConfig']['removeItems'],1);
 
 		foreach($selItems as $tk => $p)	{
 			if (in_array($p[1],$removeItems))	{
@@ -67,7 +67,7 @@ class tx_ttaddress_treeview {
 
 				// Removing doktypes with no access:
 			if ($table.'.'.$field == 'pages.doktype')	{
-				if (!($GLOBALS['BE_USER']->isAdmin() || t3lib_div::inList($GLOBALS['BE_USER']->groupData['pagetypes_select'],$p[1])))	{
+				if (!($GLOBALS['BE_USER']->isAdmin() || \TYPO3\CMS\Core\Utility\GeneralUtility::inList($GLOBALS['BE_USER']->groupData['pagetypes_select'],$p[1])))	{
 					unset($selItems[$tk]);
 				}
 			}
@@ -86,11 +86,11 @@ class tx_ttaddress_treeview {
 		if ($maxitems<=1 && !$config['treeView'])	{
 
 		} else {
-			
+
 			if ($table !== 'tt_content' && $row['sys_language_uid'] && $row['l18n_parent'] ) {
 				// the current record is a translation of another record
 				$errorMsg = array();
-									
+
 				// get parent group of the translation original
 				$origParent = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 					'g2.*',
@@ -105,7 +105,7 @@ class tx_ttaddress_treeview {
 				}
 				$item = '<div class="typo3-TCEforms-originalLanguageValue">'.$item.'</div>';
 			} else { // build tree selector
-						
+
 				// build tree selector
 				$item.= '<input type="hidden" name="'.$PA['itemFormElName'].'_mul" value="'.($config['multiple']?1:0).'" />';
 
@@ -120,16 +120,16 @@ class tx_ttaddress_treeview {
 
 				if($config['treeView'] && $config['foreign_table']) {
 					global $TCA, $LANG;
-					
-					if($config['treeViewClass'] && is_object($treeViewObj = &t3lib_div::getUserObj($config['treeViewClass'],'user_',false))) {
-						
+
+					if($config['treeViewClass'] && is_object($treeViewObj = &\TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($config['treeViewClass'],'user_',false))) {
+
 					} else {
-						$treeViewObj = t3lib_div::makeInstance('tx_ttaddress_tceFunc_selectTreeView');
+						$treeViewObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_ttaddress_tceFunc_selectTreeView');
 					}
-					
+
 					$where   = ' AND sys_language_uid = 0 AND l18n_parent = 0';
 					$orderBy = 'title';
-					
+
 					$treeViewObj->table        = $config['foreign_table'];
 					$treeViewObj->init($where, $orderBy);
 					$treeViewObj->backPath     = $this->pObj->backPath;
@@ -173,7 +173,7 @@ class tx_ttaddress_treeview {
 
 					$width = 280; // default width for the field with the group tree
 					if ($GLOBALS['CLIENT']['BROWSER'] == 'msie') {
-						// to suppress the unneeded horizontal scrollbar IE 
+						// to suppress the unneeded horizontal scrollbar IE
 						// needs a width of at least 320px
 						$width = 320;
 					}
@@ -205,7 +205,7 @@ class tx_ttaddress_treeview {
 				}
 
 					// Perform modification of the selected items array:
-				$itemArray = t3lib_div::trimExplode(',',$PA['itemFormElValue'],1);
+				$itemArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$PA['itemFormElValue'],1);
 				foreach($itemArray as $tk => $tv) {
 					$tvP = explode('|',$tv,2);
 					if (in_array($tvP[0],$removeItems) && !$PA['fieldTSConfig']['disableNoMatchingValueElement'])	{
@@ -217,7 +217,7 @@ class tx_ttaddress_treeview {
 					}
 					$itemArray[$tk]=implode('|',$tvP);
 				}
-				
+
 				$params=array(
 					'size' => $size,
 					'autoSizeMax' => self::forceIntegerInRange($config['autoSizeMax'],0),
@@ -257,7 +257,7 @@ class tx_ttaddress_treeview {
 	function findRecursiveGroups ($PA,$row,$table,$storagePid,$treeIds) {
 		$errorMsg = array();
 		if ($table == 'tt_content' && $row['CType']=='list' && $row['list_type']=='tt_address_pi1') { // = tt_content element which inserts plugin tx_ttaddress_pi1
-			$cfgArr = t3lib_div::xml2array($row['pi_flexform']);
+			$cfgArr = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($row['pi_flexform']);
 			if (is_array($cfgArr) && is_array($cfgArr['data']['sDEF']['lDEF']) && $cfgArr['data']['sDEF']['lDEF']['groupSelection']) {
 				$rcList = $this->compareGroupVals ($treeIds,$cfgArr['data']['sDEF']['lDEF']['groupSelection']['vDEF']);
 			}
@@ -301,7 +301,7 @@ class tx_ttaddress_treeview {
 		$catvals = explode(',',$catString); // groups of the current record (left field)
 		foreach ($catvals as $k) {
 			$c = explode('|',$k);
-			if(!t3lib_div::inList($showncats,$c[0])) {
+			if(!\TYPO3\CMS\Core\Utility\GeneralUtility::inList($showncats,$c[0])) {
 				$recursiveGroups[]=$c;
 			}
 		}
@@ -316,7 +316,7 @@ class tx_ttaddress_treeview {
 	}
 
 	/**
-	 * Wrapper for t3lib_div::intInRange (TYPO3 4.5)/t3lib_utility_Math::forceIntegerInRange (TYPO3 4.6+)
+	 * Wrapper for \TYPO3\CMS\Core\Utility\GeneralUtility::intInRange (TYPO3 4.5)/t3lib_utility_Math::forceIntegerInRange (TYPO3 4.6+)
 	 *
 	 * @param $var mixed Any input variable to test
 	 * @return boolean Returns TRUE if string is an integer
@@ -324,10 +324,10 @@ class tx_ttaddress_treeview {
 	public static function forceIntegerInRange($theInt, $min, $max = 2000000000, $defaultValue = 0) {
 
 		if (version_compare(TYPO3_branch, '4.6', '<')) {
-			return t3lib_div::intInRange($theInt, $min, $max, $defaultValue);
+			return \TYPO3\CMS\Core\Utility\GeneralUtility::intInRange($theInt, $min, $max, $defaultValue);
 		}
 
-		return t3lib_utility_Math::forceIntegerInRange($theInt, $min, $max, $defaultValue);
+		return \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($theInt, $min, $max, $defaultValue);
 
 	}
 

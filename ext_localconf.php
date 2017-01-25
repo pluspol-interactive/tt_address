@@ -1,14 +1,8 @@
 <?php
 
-
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-t3lib_extMgm::addUserTSConfig('
-	options.saveDocNew.tt_address_group = 1
-	options.saveDocNew.tt_address = 1
-');
-
-t3lib_extMgm::addPItoST43(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43(
 	$_EXTKEY,
 	'pi1/class.tx_ttaddress_pi1.php',
 	'_pi1',
