@@ -38,6 +38,7 @@ return array(
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
             'config'  => array(
                 'type'  => 'select',
+                'renderType' => 'selectSingle',
                 'items' => array(
                     array('', 0),
                     array('LLL:EXT:lang/locallang_general.xml:LGL.hide_at_login', -1),
@@ -85,6 +86,7 @@ return array(
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
             'config'  => array(
                 'type'                => 'select',
+                'renderType'          => 'selectSingle',
                 'foreign_table'       => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
                 'items'               => array(
@@ -99,6 +101,7 @@ return array(
             'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
             'config'      => array(
                 'type'  => 'select',
+                'renderType' => 'selectSingle',
                 'items' => array(
                     array('', 0),
                 ),
