@@ -165,18 +165,17 @@ return array (
                 'size' => '20',
                 'max'  => '255',
                 'wizards' => array(
-                    '_PADDING' => 2,
                     'link' => array(
                         'type' => 'popup',
                         'title' => 'LLL:EXT:cms/locallang_ttc.xml:header_link_formlabel',
-                        'icon' => 'link_popup.gif',
-                        'script' => 'browse_links.php?mode=wizard&act=page|url',
-                        'params' => array(
-                            'blindLinkOptions' => 'mail,file,spec,folder',
-                        ),
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1',
+                        'icon' => 'actions-wizard-link',
+                        'module' => [
+                            'name' => 'wizard_link',
+                        ],
+                        'JSopenParams' => 'width=800,height=600,status=0,menubar=0,scrollbars=1'
                     ),
-                )
+                ),
+                'softref' => 'typolink'
             )
         ),
         'email' => array (
@@ -278,7 +277,7 @@ return array (
         )
     ),
     'types' => array (
-        '1' => array('showitem' => 'hidden;;;;1-1-1, gender;;;;3-3-3, name;;2, birthday, address;;6, zip, city;;3, email;;5, phone;;4, image;;;;4-4-4, description, addressgroup;;;;1-1-1')
+        '1' => array('showitem' => 'hidden,gender,name,birthday,address,zip,city,email,phone,image,description,addressgroup')
     ),
     'palettes' => array (
         '2' => array('showitem' => 'title, company'),

@@ -113,7 +113,7 @@ return array(
         ),
     ),
     'types' => array(
-        '0' => array('showitem' => 'hidden;;1;;1-1-1, title;;;;2-2-2, parent_group;;;;3-3-3, description')
+        '0' => array('showitem' => 'hidden,title,parent_group,description')
     ),
     'palettes' => array(
         '1' => array('showitem' => 'fe_group')
