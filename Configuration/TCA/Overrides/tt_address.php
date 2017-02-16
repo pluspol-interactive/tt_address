@@ -5,7 +5,7 @@ defined('TYPO3_MODE') or die();
 $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['tt_address']);
 
 // original values
-$showitemOrig            = $GLOBALS['TCA']['tt_address']['types'][1]['showitem'];
+$showitemOrig            = $GLOBALS['TCA']['tt_address']['types']['1']['showitem'];
 $showRecordFieldListOrig = $GLOBALS['TCA']['tt_address']['interface']['showRecordFieldList'];
 
 // shows both, the old and the new fields while converting to the new fields
@@ -35,7 +35,7 @@ $showRecordFieldListNew = str_replace(
     $showRecordFieldListOrig
 );
 
-$GLOBALS['TCA']['tt_address']['types'][1]['showitem'] = $showitemNew;
+$GLOBALS['TCA']['tt_address']['types']['1']['showitem'] = $showitemNew;
 $GLOBALS['TCA']['tt_address']['interface']['showRecordFieldList'] = $showRecordFieldListNew;
 
 // end splitting name
