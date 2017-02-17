@@ -1,8 +1,8 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-return array(
-    'ctrl' => array(
+return [
+    'ctrl' => [
         'title'                    => 'LLL:EXT:tt_address/locallang_tca.xml:tt_address_group',
         'label'                    => 'title',
         'tstamp'                   => 'tstamp',
@@ -14,53 +14,53 @@ return array(
         'transOrigPointerField'    => 'l18n_parent',
         'transOrigDiffSourceField' => 'l18n_diffsource',
         'languageField'            => 'sys_language_uid',
-        'enablecolumns'            => array(
+        'enablecolumns'            => [
             'disabled' => 'hidden',
             'fe_group' => 'fe_group',
-        ),
+        ],
         'iconfile'                 => 'EXT:tt_address/icon_tt_address_group.gif',
-    ),
-    'interface' => array(
-        'showRecordFieldList' => 'hidden,fe_group,title,parent_group,description'
-    ),
-    'columns' => array(
-        'hidden' => array(
+    ],
+    'interface' => [
+        'showRecordFieldList' => 'hidden,fe_group,title,parent_group,description',
+    ],
+    'columns' => [
+        'hidden' => [
             'l10n_mode' => 'mergeIfNotBlank',
             'exclude'   => 1,
             'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-            'config'    => array(
+            'config'    => [
                 'type'    => 'check',
-                'default' => '1'
-            )
-        ),
-        'fe_group' => array(
+                'default' => '1',
+            ],
+        ],
+        'fe_group' => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
-            'config'  => array(
+            'config'  => [
                 'type'  => 'select',
                 'renderType' => 'selectSingle',
-                'items' => array(
-                    array('', 0),
-                    array('LLL:EXT:lang/locallang_general.xml:LGL.hide_at_login', -1),
-                    array('LLL:EXT:lang/locallang_general.xml:LGL.any_login', -2),
-                    array('LLL:EXT:lang/locallang_general.xml:LGL.usergroups', '--div--')
-                ),
-                'foreign_table' => 'fe_groups'
-            )
-        ),
-        'title' => array(
+                'items' => [
+                    ['', 0],
+                    ['LLL:EXT:lang/locallang_general.xml:LGL.hide_at_login', -1],
+                    ['LLL:EXT:lang/locallang_general.xml:LGL.any_login', -2],
+                    ['LLL:EXT:lang/locallang_general.xml:LGL.usergroups', '--div--'],
+                ],
+                'foreign_table' => 'fe_groups',
+            ],
+        ],
+        'title' => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.title',
-            'config'  => array(
+            'config'  => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'required',
-            )
-        ),
-        'parent_group' => array(
+            ]
+        ],
+        'parent_group' => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:tt_address/locallang_tca.xml:tt_address_group.parent_group',
-            'config'  => array(
+            'config'  => [
                 'type'          => 'select',
                 'form_type'     => 'user',
                 'userFunc'      => 'tx_ttaddress_treeview->displayGroupTree',
@@ -70,55 +70,60 @@ return array(
                 'minitems'      => 0,
                 'maxitems'      => 2,
                 'foreign_table' => 'tt_address_group',
-            )
-        ),
-        'description' => array(
+            ],
+        ],
+        'description' => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.description',
-            'config'  => array(
+            'config'  => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            )
-        ),
-        'sys_language_uid' => array(
+            ],
+        ],
+        'sys_language_uid' => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
-            'config'  => array(
+            'config'  => [
                 'type'                => 'select',
                 'renderType'          => 'selectSingle',
                 'foreign_table'       => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
-                'items'               => array(
-                    array('LLL:EXT:lang/locallang_general.php:LGL.allLanguages', -1),
-                    array('LLL:EXT:lang/locallang_general.php:LGL.default_value', 0)
-                )
-            )
-        ),
-        'l18n_parent' => array(
+                'items'               => [
+                    ['LLL:EXT:lang/locallang_general.php:LGL.allLanguages', -1],
+                    ['LLL:EXT:lang/locallang_general.php:LGL.default_value', 0],
+                ],
+            ],
+        ],
+        'l18n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'exclude'     => 1,
             'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
-            'config'      => array(
+            'config'      => [
                 'type'  => 'select',
                 'renderType' => 'selectSingle',
-                'items' => array(
-                    array('', 0),
-                ),
+                'items' => [
+                    ['', 0],
+                ],
                 'foreign_table'       => 'tt_address_group',
                 'foreign_table_where' => 'AND tt_address_group.uid=###REC_FIELD_l18n_parent### AND tt_address_group.sys_language_uid IN (-1,0)',
-            )
-        ),
-        'l18n_diffsource' => array(
-            'config'=> array(
-                'type' => 'passthrough'
-            )
-        ),
-    ),
-    'types' => array(
-        '0' => array('showitem' => 'hidden,title,parent_group,description')
-    ),
-    'palettes' => array(
-        '1' => array('showitem' => 'fe_group')
-    )
-);
+            ],
+        ],
+        'l18n_diffsource' => [
+            'config'=> [
+                'type' => 'passthrough',
+            ],
+        ],
+    ],
+    'types' => [
+        '0' => [
+            'showitem' =>
+                'hidden,
+                --palette--;;1,
+                title,parent_group,description',
+        ],
+    ],
+    'palettes' => [
+        '1' => ['showitem' => 'fe_group'],
+    ]
+];
